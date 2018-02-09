@@ -1,0 +1,23 @@
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+
+public class testDriver {
+	
+public static void main(String[] args) throws InterruptedException {
+
+	
+	System.setProperty("webdriver.gecko.driver", "C:\\Users\\Joshu\\Downloads\\geckodriver-v0.19.1-win64\\geckodriver.exe");
+	WebDriver driver = new FirefoxDriver();
+	// driver.get("http://www.qa.com") ;
+	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	driver.navigate().to("http://www.qa.com") ;
+	
+}
+
+}
+
+
+ 
