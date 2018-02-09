@@ -1,0 +1,46 @@
+package basic;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+
+public class selenium {
+	WebDriver driver;
+
+	@Before
+	public void setup() {
+		System.setProperty("webdriver.gecko.driver",
+				"C:\\Users\\Joshu\\Downloads\\geckodriver-v0.19.1-win64\\geckodriver.exe");
+		driver = new FirefoxDriver();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.navigate().to("https://www.qa.com");
+	}
+	
+	@Test
+	public void test() {
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		System.out.println(driver.getCurrentUrl());
+		try{
+		  Assert.assertEquals("https://www.qa.com/", driver.getCurrentUrl());
+		  System.out.println("Navigated to correct webpage");
+		}
+		catch(Throwable pageNavigationError){
+		  System.out.println("Didn't navigate to correct webpage");
+		}
+	}
+
+	@After
+	public void tearDown() {
+		try {
+			driver.close();
+		} catch (Exception ex) {
+			System.out.println(ex.toString());
+		}
+	}
+}
