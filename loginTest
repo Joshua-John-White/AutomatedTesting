@@ -1,0 +1,27 @@
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class loginTestDriver {
+public static void main(String[] args) {
+
+	System.setProperty("webdriver.gecko.driver", "C:\\Users\\Joshu\\Downloads\\geckodriver-v0.19.1-win64\\geckodriver.exe");
+	WebDriver driver = new FirefoxDriver();
+
+driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+
+driver.get("https:www.thedemosite.co.uk/login.php");
+
+driver.manage().window().maximize();
+
+driver.findElement(By.name("username")).sendKeys("sammy");
+
+driver.findElement(By.name("password")).sendKeys("ffff");
+// Wait For Page To Load
+driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+// Click on 'Sign In'
+driver.findElement(By.name("FormsButton2")).click();
+
+}
+}
