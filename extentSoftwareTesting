@@ -1,0 +1,75 @@
+package softwareTesting;
+
+
+
+import java.io.File;
+
+import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+public class extentReportClass {
+	
+	ExtentReports extent;
+	ExtentTest logger;
+	
+	@BeforeTest
+	public void startTest() {
+		// Note if boolean below is set to true this will overwrite current report
+		extent = new ExtentReports(System.getProperty("user.dir")+"", true);
+		extent.addSystemInfo("Host Name","Software Testing")
+		.addSystemInfo("Enviroment","Automation Testing")
+		.addSystemInfo("User Name","J W");
+		
+		extent.loadConfig(new File(System.getProperty("user.dir")+"\\extent-config.xml"));
+	}
+	
+	@Test
+	public void passTest() {
+		logger = extent.startTest("passTest");
+		Assert.assertTrue(true);
+		logger.log(LogStatus.PASS, "Test case passed is passTest");
+	}
+	
+	@Test
+	public void failTest() {
+		logger = extent.startTest("failTest");
+		Assert.assertTrue(false);
+		logger.log(LogStatus.FAIL, "Test case (failcase) Status passed");
+		
+	}
+	
+	@Test
+	public void skipTest() {
+		logger = extent.startTest("skipTest");
+		throw new SkipException("Skipping - this is not ready for testing");
+		
+	}
+	
+	@AfterMethod
+	public void getResults(ITestResult result) {
+		if(result.getStatus() == ITestResult.FAILURE) {
+			logger.log(LogStatus.FAIL, "Test case failed is"+result.getName());
+			logger.log(LogStatus.FAIL, "Test case failed is"+result.getThrowable());
+		}else if(result.getStatus() == ITestResult.SKIP) {
+			logger.log(LogStatus.SKIP, "Test case failed is"+result.getName());
+		}
+		extent.endTest(logger);
+	}
+	
+	@AfterTest
+	public void endReport() {
+		extent.flush();
+		extent.close();
+	}
+	}
+	
+
